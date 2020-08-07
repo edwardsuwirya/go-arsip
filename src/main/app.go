@@ -2,32 +2,26 @@ package main
 
 import (
 	"github.com/rivo/tview"
+	"os"
+	"strings"
 )
 
 var app *tview.Application
 var pages *tview.Pages
 var daftarArsip = make([]arsip, 0, 1)
+var defLang = "ID"
 
 func main() {
-	//var arsip01 = arsip{
-	//	nomor:      "001",
-	//	judul:      "Arsip A",
-	//	keterangan: "Arsip A",
-	//}
-	//var arsip02 = arsip{
-	//	nomor:      "002",
-	//	judul:      "Arsip B",
-	//	keterangan: "Arsip B",
-	//}
-	//
-	//var arsip03 = arsip{
-	//	nomor:      "003",
-	//	judul:      "Arsip C",
-	//	keterangan: "Arsip C",
-	//}
-	//tambahArsip(arsip01)
-	//tambahArsip(arsip02)
-	//tambahArsip(arsip03)
+	if len(os.Args) == 2 {
+		langArgs := os.Args[1]
+		if len(langArgs) > 1 {
+			defLangTemp := strings.ToUpper(langArgs)
+			if defLang == "ID" || defLang == "EN" {
+				defLang = defLangTemp
+			}
+		}
+	}
+
 	initUi()
 }
 
@@ -35,7 +29,7 @@ func initUi() {
 	app = tview.NewApplication()
 
 	pages = tview.NewPages().
-		AddPage("halamanUtama", halamanUtama(), true, true)
+		AddPage(MainPageId, halamanUtama(), true, true)
 
 	if err := app.SetRoot(pages, true).Run(); err != nil {
 		panic(err)
