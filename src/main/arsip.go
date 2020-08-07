@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-type arsip struct {
-	nomor      string
-	judul      string
-	keterangan string
+type Arsip struct {
+	Nomor      string
+	Judul      string
+	Keterangan string
 }
 
 var inputField *tview.InputField
@@ -28,11 +28,12 @@ func halamanTambahArsip() (flex *tview.Flex) {
 			keterangan = text
 		}).
 		AddButton(SaveLabel[defLang], func() {
-			daftarArsip = append(daftarArsip, arsip{
-				nomor:      noArsip,
-				judul:      judulArsip,
-				keterangan: keterangan,
+			daftarArsip = append(daftarArsip, Arsip{
+				Nomor:      noArsip,
+				Judul:      judulArsip,
+				Keterangan: keterangan,
 			})
+			CreateCsv(fileName, daftarArsip)
 			gantiHalaman(SuccessNotifPageId, successNotif())
 		}).
 		AddButton(CancelLabel[defLang], func() {
@@ -45,7 +46,7 @@ func halamanTambahArsip() (flex *tview.Flex) {
 	return
 }
 
-func halamanListArsip(list []arsip) (flex *tview.Flex) {
+func halamanListArsip(list []Arsip) (flex *tview.Flex) {
 	t := tview.NewTable().SetBorders(true)
 	t.SetBorder(true).SetTitle("Daftar Arsip")
 	t.SetCell(0, 0, tview.NewTableCell(DocNoLabel[defLang]))
@@ -54,11 +55,11 @@ func halamanListArsip(list []arsip) (flex *tview.Flex) {
 
 	for r := 1; r <= len(list); r++ {
 		t.SetCell(r, 0,
-			tview.NewTableCell(list[r-1].nomor))
+			tview.NewTableCell(list[r-1].Nomor))
 		t.SetCell(r, 1,
-			tview.NewTableCell(list[r-1].judul))
+			tview.NewTableCell(list[r-1].Judul))
 		t.SetCell(r, 2,
-			tview.NewTableCell(list[r-1].keterangan))
+			tview.NewTableCell(list[r-1].Keterangan))
 	}
 	nav := navigasi("")
 
@@ -84,11 +85,11 @@ func halamanListArsip(list []arsip) (flex *tview.Flex) {
 }
 
 func cariArsipDenganNomor() {
-	hasil := make([]arsip, 0, 1)
+	hasil := make([]Arsip, 0, 1)
 	pencarian := inputField.GetText()
-	for _, arsip := range daftarArsip {
-		if strings.HasPrefix(arsip.nomor, pencarian) {
-			hasil = append(hasil, arsip)
+	for _, a := range daftarArsip {
+		if strings.HasPrefix(a.Nomor, pencarian) {
+			hasil = append(hasil, a)
 		}
 	}
 	gantiHalaman(ViewListDocPageId, halamanListArsip(hasil))

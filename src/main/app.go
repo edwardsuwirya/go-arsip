@@ -8,8 +8,9 @@ import (
 
 var app *tview.Application
 var pages *tview.Pages
-var daftarArsip = make([]arsip, 0, 1)
+var daftarArsip = make([]Arsip, 0, 1)
 var defLang = "ID"
+var fileName = "arsip.csv"
 
 func main() {
 	if len(os.Args) == 2 {
@@ -21,7 +22,7 @@ func main() {
 			}
 		}
 	}
-
+	ReadCsv(fileName)
 	initUi()
 }
 
