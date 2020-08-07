@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 )
 
-func CreateCsv(filename string, a []Arsip) {
+func CreateCsv(a []Arsip) {
 	b, err := csvutil.Marshal(a)
 	if err != nil {
 		panic(err)
@@ -18,10 +18,10 @@ func CreateCsv(filename string, a []Arsip) {
 	}
 }
 
-func ReadCsv(filename string) {
+func ReadCsv() {
 	content, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		CreateCsv(fileName, daftarArsip)
+		CreateCsv(daftarArsip)
 	}
 	if err := csvutil.Unmarshal(content, &daftarArsip); err != nil {
 		fmt.Println("error:", err)

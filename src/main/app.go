@@ -22,7 +22,7 @@ func main() {
 			}
 		}
 	}
-	ReadCsv(fileName)
+	ReadCsv()
 	initUi()
 }
 

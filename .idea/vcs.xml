@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/gdamore/encoding" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/gdamore/tcell" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/gizak/termui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/jroimartin/gocui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/jszwec/csvutil" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/lucasb-eyer/go-colorful" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/mattn/go-runewidth" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/mitchellh/go-wordwrap" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/nsf/termbox-go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/rivo/tview" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/rivo/uniseg" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/golang.org/x/text" vcs="Git" />
+  </component>
+</project>
