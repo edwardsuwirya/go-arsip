@@ -33,7 +33,7 @@ func halamanTambahArsip() (flex *tview.Flex) {
 				Judul:      judulArsip,
 				Keterangan: keterangan,
 			})
-			CreateCsv(daftarArsip)
+			persistence.Create(daftarArsip)
 			gantiHalaman(SuccessNotifPageId, successNotif())
 		}).
 		AddButton(CancelLabel[defLang], func() {

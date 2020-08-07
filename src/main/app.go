@@ -10,7 +10,9 @@ var app *tview.Application
 var pages *tview.Pages
 var daftarArsip = make([]Arsip, 0, 1)
 var defLang = "ID"
-var fileName = "arsip.csv"
+var fileName = "arsip.json"
+
+var persistence JsonPersistence
 
 func main() {
 	if len(os.Args) == 2 {
@@ -22,7 +24,8 @@ func main() {
 			}
 		}
 	}
-	ReadCsv()
+	persistence = JsonPersistence{}
+	persistence.Read()
 	initUi()
 }
 
