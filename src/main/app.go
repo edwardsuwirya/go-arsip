@@ -1,41 +1,27 @@
 package main
 
 import (
-	"github.com/rivo/tview"
-	"os"
-	"strings"
+	"config"
+	"deliveries"
 )
 
-var app *tview.Application
-var pages *tview.Pages
-var daftarArsip = make([]Arsip, 0, 1)
-var defLang = "ID"
-var fileName = "arsip.json"
-
-var persistence JsonPersistence
-
-func main() {
-	if len(os.Args) == 2 {
-		langArgs := os.Args[1]
-		if len(langArgs) > 1 {
-			defLangTemp := strings.ToUpper(langArgs)
-			if defLang == "ID" || defLang == "EN" {
-				defLang = defLangTemp
-			}
-		}
-	}
-	persistence = JsonPersistence{}
-	persistence.Read()
-	initUi()
+type app struct {
+	config *config.Config
 }
 
-func initUi() {
-	app = tview.NewApplication()
-
-	pages = tview.NewPages().
-		AddPage(MainPageId, halamanUtama(), true, true)
-
-	if err := app.SetRoot(pages, true).Run(); err != nil {
-		panic(err)
+func (a app) run() {
+	if a.config.ConsoleGui == 1 {
+		deliveries.InitUi(a.config).Run()
 	}
+}
+
+func newApp(config *config.Config) *app {
+	return &app{
+		config,
+	}
+}
+func main() {
+	//go run main <{en|id}> <file_name.{json|csv}> <{1|0}>
+	c := config.NewConfig()
+	newApp(c).run()
 }

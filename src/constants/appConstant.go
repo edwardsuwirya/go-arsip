@@ -1,4 +1,4 @@
-package main
+package constants
 
 //Page ID Constants
 const (
