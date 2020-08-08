@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gdamore/tcell"
+	"github.com/go-ozzo/ozzo-validation"
 	"github.com/rivo/tview"
 	"strings"
 )
@@ -12,29 +13,43 @@ type Arsip struct {
 	Keterangan string
 }
 
+func (a Arsip) validasi() error {
+	return validation.ValidateStruct(&a,
+		validation.Field(&a.Nomor, validation.Required),
+		validation.Field(&a.Judul, validation.Required),
+	)
+}
+
 var inputField *tview.InputField
 
 func halamanTambahArsip() (flex *tview.Flex) {
 
 	var noArsip, judulArsip, keterangan string
 	f := tview.NewForm().
-		AddInputField(DocNoLabel[defLang], "", 20, nil, func(text string) {
+		AddInputField(labelDibutuhkan(DocNoLabel[defLang]), "", 30, nil, func(text string) {
 			noArsip = text
 		}).
-		AddInputField(DocTitleLabel[defLang], "", 20, nil, func(text string) {
+		AddInputField(labelDibutuhkan(DocTitleLabel[defLang]), "", 30, nil, func(text string) {
 			judulArsip = text
 		}).
-		AddInputField(NotesLabel[defLang], "", 20, nil, func(text string) {
+		AddInputField(NotesLabel[defLang], "", 50, nil, func(text string) {
 			keterangan = text
 		}).
 		AddButton(SaveLabel[defLang], func() {
-			daftarArsip = append(daftarArsip, Arsip{
+			a := Arsip{
 				Nomor:      noArsip,
 				Judul:      judulArsip,
 				Keterangan: keterangan,
-			})
-			persistence.Create(daftarArsip)
-			gantiHalaman(SuccessNotifPageId, successNotif())
+			}
+			err := a.validasi()
+			if err != nil {
+				gantiHalaman(ErrorNotifPageId, gagalNotif())
+			} else {
+				daftarArsip = append(daftarArsip, a)
+				persistence.Create(daftarArsip)
+				gantiHalaman(SuccessNotifPageId, suksesNotif())
+			}
+
 		}).
 		AddButton(CancelLabel[defLang], func() {
 			gantiHalaman(MainPageId, halamanUtama())
@@ -94,10 +109,20 @@ func cariArsipDenganNomor() {
 	}
 	gantiHalaman(ViewListDocPageId, halamanListArsip(hasil))
 }
-func successNotif() (modal *tview.Modal) {
-	return showMessage(SuccessLabel[defLang], []string{"Ok"}, func(buttonIndex int, buttonLabel string) {
-		if buttonLabel == "Ok" {
+func suksesNotif() (modal *tview.Modal) {
+	return notifikasi(SuccessLabel[defLang], SuccessMessageType, []string{AddMoreLabel[defLang], FinishLabel[defLang]}, func(buttonIndex int, buttonLabel string) {
+		if buttonLabel == FinishLabel[defLang] {
+			gantiHalaman(MainPageId, halamanUtama())
+		} else {
 			pages.RemovePage(SuccessNotifPageId)
+			gantiHalaman(AddDocPageId, halamanTambahArsip())
+		}
+	})
+}
+func gagalNotif() (modal *tview.Modal) {
+	return notifikasi(MandatoryFailedLabel[defLang], FailedMessageType, []string{OkLabel[defLang]}, func(buttonIndex int, buttonLabel string) {
+		if buttonLabel == OkLabel[defLang] {
+			pages.RemovePage(ErrorNotifPageId)
 			gantiHalaman(AddDocPageId, halamanTambahArsip())
 		}
 	})

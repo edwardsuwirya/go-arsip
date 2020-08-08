@@ -5,6 +5,7 @@
     <mapping directory="$PROJECT_DIR$/src/github.com/gdamore/encoding" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/gdamore/tcell" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/gizak/termui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/go-ozzo/ozzo-validation" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/jroimartin/gocui" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/jszwec/csvutil" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/lucasb-eyer/go-colorful" vcs="Git" />

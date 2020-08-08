@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"github.com/gdamore/tcell"
 	"github.com/rivo/tview"
 	"strconv"
 )
@@ -34,19 +36,28 @@ func gantiHalaman(idHalaman string, komponen tview.Primitive) {
 	pages.AddAndSwitchToPage(idHalaman, komponen, true)
 }
 
-func navigasi(title string) (nav *tview.List) {
+func navigasi(judul string) (nav *tview.List) {
 	nav = tview.NewList().
 		AddItem(HomeLabel[defLang], "", 'h', func() {
 			pages.SwitchToPage(MainPageId)
 		})
-	nav.SetBorder(true).SetTitle(title)
+	nav.SetBorder(true).SetTitle(judul)
 	return
 }
 
-func showMessage(message string, buttons []string, callback func(int, string)) (modal *tview.Modal) {
+func notifikasi(pesan string, jenisPesan int, tombol []string, callback func(int, string)) (modal *tview.Modal) {
+	color := tcell.ColorGreen
+	if jenisPesan == FailedMessageType {
+		color = tcell.ColorRed
+	}
 	modal = tview.NewModal().
-		SetText(message).
-		AddButtons(buttons).
+		SetBackgroundColor(color).
+		SetText(pesan).
+		AddButtons(tombol).
 		SetDoneFunc(callback)
 	return
+}
+
+func labelDibutuhkan(label string) string {
+	return fmt.Sprintf("%s %s", label, "*")
 }
